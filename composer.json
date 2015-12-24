@@ -1,6 +1,6 @@
 {
     "name": "dlimars/laravel-tenancy-subdomain",
-    "description": "Pacote para crque facilita criação de rotas, troca de banco de dados\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[ e\u001b[2~ troca de banco de dados baseado no subdominio da sua aplicação",
+    "description": "Pacote para facilitar criação de rotas e troca de banco de dados baseado no subdominio da sua aplicação",
     "license": "MIT",
     "authors": [
         {
@@ -9,5 +9,12 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "illuminate/routing": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dlimars\\Tenant\\": "src/"
+        }
+    }
 }
