@@ -1,0 +1,13 @@
+{
+    "name": "dlimars/laravel-tenancy-subdomain",
+    "description": "Pacote para crque facilita criação de rotas, troca de banco de dados\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[ e\u001b[2~ troca de banco de dados baseado no subdominio da sua aplicação",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Lima",
+            "email": "daniel@docode.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
