@@ -1,41 +1,46 @@
 # Laravel Tenant Subdomínio
+[![Build Status](https://travis-ci.org/dlimars/laravel-tenant-subdomain.svg)](https://travis-ci.org/dlimars/laravel-tenant-subdomain)
+[![Latest Stable Version](https://poser.pugx.org/dlimars/laravel-tenant-subdomain/v/stable)](https://packagist.org/packages/dlimars/laravel-tenant-subdomain)
+[![Total Downloads](https://poser.pugx.org/dlimars/laravel-tenant-subdomain/downloads)](https://packagist.org/packages/dlimars/laravel-tenant-subdomain)
+[![Latest Unstable Version](https://poser.pugx.org/dlimars/laravel-tenant-subdomain/v/unstable)](https://packagist.org/packages/dlimars/laravel-tenant-subdomain)
+[![License](https://poser.pugx.org/dlimars/laravel-tenant-subdomain/license)](https://packagist.org/packages/dlimars/laravel-tenant-subdomain)
+
 Este pacote irá auxiliar na organização de clientes em subdomínios usando Laravel.
 
 ## Instalação
 Adicione no seu `composer.json`
 
 ```
-	"repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/dlimars/laravel-tenant-subdomain.git"
-        }
-    ],
     "require": {
-    	...
+        ...
         "dlimars/laravel-tenant-subdomain": "dev-master"
     },
+```
+
+ou execute em seu terminal
+```
+    composer require dlimars/laravel-tenant-subdomain
 ```
 
 adicione o provider e o facade em `config/app.php`:
 
 ```
-	'providers' => [
-		// outros providers
-		Dlimars\Tenant\Providers\TenantServiceProvider::class,
-	],
+    'providers' => [
+        // outros providers
+        Dlimars\Tenant\Providers\TenantServiceProvider::class,
+    ],
 
-	'aliases' => [
-		// outros aliases
-		'Tenant' => Dlimars\Tenant\Facades\Tenant::class,
-	]
+    'aliases' => [
+        // outros aliases
+        'Tenant' => Dlimars\Tenant\Facades\Tenant::class,
+    ]
 ```
 
 adicione o middleware em `app/Http/Kernel.php`
 
 ```
-	protected $routeMiddleware = [
-		// outros middlewares
+    protected $routeMiddleware = [
+        // outros middlewares
         'tenant.database' => \Dlimars\Tenant\Middlewares\TenantDatabase::class
     ];
 ```
@@ -56,9 +61,9 @@ para gerar rotas de subdominio, utilize da seguinte forma:
 // Tenant::getFullDomain() retorna algo como '{_account_}.domain.com'
 
 Route::group(['domain' => Tenant::getFullDomain()], function () {
-	Route::get('subdomain-teste/{id}', ['as' => 'subdomain-teste', function($subdomain, $id){
-		return route('subdomain-teste', ['123']);
-	}]);
+    Route::get('subdomain-teste/{id}', ['as' => 'subdomain-teste', function($subdomain, $id){
+        return route('subdomain-teste', ['123']);
+    }]);
 });
 ```
 
@@ -68,9 +73,9 @@ para gerar rotas para a aplicação principal (que não seja subdominio), utiliz
 // Tenant::getDomain() retorna algo como 'domain.com'
 
 Route::group(['domain' => Tenant::getDomain()], function () {
-	Route::get('domain-teste/{id}', ['as' => 'domain-teste', function($id){
-		return route('domain-teste', ['123']);
-	}]);
+    Route::get('domain-teste/{id}', ['as' => 'domain-teste', function($id){
+        return route('domain-teste', ['123']);
+    }]);
 });
 
 // isso impede que rotas do dominio possam ser acessadas através do subdominio
@@ -96,9 +101,9 @@ return [
 o arquivo é lido e adicionado como conexão padrão `tenant`, isso é feito via Middleware, em todas as rotas que irão utilizar base de dados própria, use o middleware `tenant.database`:
 ```
 Route::group(['domain' => Tenant::getDomain(), 'middleware' => ['tenant.database']], function () {
-	Route::get('domain-teste/{id}', ['as' => 'domain-teste', function($id){
-		return route('domain-teste', ['123']);
-	}]);
+    Route::get('domain-teste/{id}', ['as' => 'domain-teste', function($id){
+        return route('domain-teste', ['123']);
+    }]);
 });
 ```
 
