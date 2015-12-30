@@ -2,8 +2,25 @@
 
 namespace Dlimars\Tenant;
 
+use Illuminate\Config\Repository as ConfigRepository;
+
 class TenantManager
 {
+
+    /**
+     * Configuration class
+     * @var Illuminate\Config\Repository
+     */
+    protected $config;
+
+    /**
+     * Create a new TenantManager
+     * @param Illuminate\Config\Repository $config Configuration class
+     */
+    public function __construct(ConfigRepository $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * Get the domain configuration
@@ -12,7 +29,7 @@ class TenantManager
      */
     public function getDomain()
     {
-        return config('tenant.host');
+        return $this->config->get('tenant.host');
     }
 
     /**
@@ -22,19 +39,8 @@ class TenantManager
      */
     public function getFullDomain()
     {
-        return "{" . config("tenant.subdomain") . "}." . config("tenant.host");
-    }
-
-    /**
-     * Check if current route is a subdomain
-     *
-     * @return bool
-     */
-    public function currentRouteIsSubdomain()
-    {
-        return
-            count( explode('.', \Request::server('HTTP_HOST')) ) >=
-            count( explode('.', $this->getFullDomain()) );
+        return "{" . $this->config->get("tenant.subdomain") . "}."
+                    . $this->config->get("tenant.host");
     }
 
     /**
@@ -59,7 +65,7 @@ class TenantManager
     {
         $prefix = $this->getDatabaseConfigPrefix($subdomain);
         $sufix  = $this->getDatabaseConfigSufix($subdomain);
-        return config('tenant.database_path') .'/'. $prefix . $subdomain . $sufix;
+        return $this->config->get('tenant.database_path') .'/'. $prefix . $subdomain . $sufix;
     }
 
     /**
@@ -70,9 +76,9 @@ class TenantManager
      */
     public function getDatabaseConfigPrefix($subdomain)
     {
-        return is_callable(config('tenant.database_prefix'))
-                        ? call_user_func_array(config('tenant.database_prefix'),[$subdomain])
-                        : config('tenant.database_prefix');
+        return is_callable($this->config->get('tenant.database_prefix'))
+                        ? call_user_func_array($this->config->get('tenant.database_prefix'),[$subdomain])
+                        : $this->config->get('tenant.database_prefix');
     }
 
     /**
@@ -83,8 +89,8 @@ class TenantManager
      */
     public function getDatabaseConfigSufix($subdomain)
     {
-        return is_callable(config('tenant.database_suffix'))
-                        ? call_user_func_array(config('tenant.database_suffix'),[$subdomain])
-                        : config('tenant.database_suffix');
+        return is_callable($this->config->get('tenant.database_suffix'))
+                        ? call_user_func_array($this->config->get('tenant.database_suffix'),[$subdomain])
+                        : $this->config->get('tenant.database_suffix');
     }
 }

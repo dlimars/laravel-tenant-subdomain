@@ -10,7 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "illuminate/routing": "5.*"
+        "illuminate/routing": "5.*",
+        "illuminate/config": "5.2.x-dev"
     },
     "autoload": {
         "psr-4": {

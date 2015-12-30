@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dfaebcffe73953765ff458e205fb47a1",
-    "content-hash": "7af65958564dff4b37913ac71160c43d",
+    "hash": "799169eaf5a1f155e0f2072806d8e7f5",
+    "content-hash": "e8282caa55d168b6dcdbde13458e3003",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -73,6 +73,51 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "illuminate/config",
+            "version": "5.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/config.git",
+                "reference": "29d25fa086eac092a54859b3cbf7580299fc101e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/config/zipball/29d25fa086eac092a54859b3cbf7580299fc101e",
+                "reference": "29d25fa086eac092a54859b3cbf7580299fc101e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.2.*",
+                "illuminate/filesystem": "5.2.*",
+                "illuminate/support": "5.2.*",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "The Illuminate Config package.",
+            "homepage": "http://laravel.com",
+            "time": "2015-06-22 20:36:58"
         },
         {
             "name": "illuminate/container",
@@ -158,6 +203,56 @@
             "description": "The Illuminate Contracts package.",
             "homepage": "http://laravel.com",
             "time": "2015-12-19 14:25:38"
+        },
+        {
+            "name": "illuminate/filesystem",
+            "version": "5.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/filesystem.git",
+                "reference": "a2d2815b8dcd825377d5c52c75170fcad7a9b9cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/a2d2815b8dcd825377d5c52c75170fcad7a9b9cb",
+                "reference": "a2d2815b8dcd825377d5c52c75170fcad7a9b9cb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.2.*",
+                "illuminate/support": "5.2.*",
+                "php": ">=5.5.9",
+                "symfony/finder": "2.8.*|3.0.*"
+            },
+            "suggest": {
+                "league/flysystem": "Required to use the Flysystem local and FTP drivers (~1.0).",
+                "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (~1.0).",
+                "league/flysystem-rackspace": "Required to use the Flysystem Rackspace driver (~1.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "The Illuminate Filesystem package.",
+            "homepage": "http://laravel.com",
+            "time": "2015-12-20 15:49:15"
         },
         {
             "name": "illuminate/http",
@@ -259,7 +354,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/routing/zipball/7bb8d2cdab4d3a364e60fa7434767d81662a1c15",
+                "url": "https://api.github.com/repos/illuminate/routing/zipball/aac4973f37d686c056a5c9b03ab03e66140a3d9a",
                 "reference": "7bb8d2cdab4d3a364e60fa7434767d81662a1c15",
                 "shasum": ""
             },
@@ -314,7 +409,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/session/zipball/905217482c16fb68862db4ff2f428ec3ff78d8dc",
+                "url": "https://api.github.com/repos/illuminate/session/zipball/81bd4edc19e05323f5283bc8af7947045486860a",
                 "reference": "905217482c16fb68862db4ff2f428ec3ff78d8dc",
                 "shasum": ""
             },
@@ -364,7 +459,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/2aa2d981d251b309f3cb2d57ac95fed0cb17df88",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/9b0bf9de6deab284958df1738c427377ed23546b",
                 "reference": "2aa2d981d251b309f3cb2d57ac95fed0cb17df88",
                 "shasum": ""
             },
@@ -513,7 +608,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/4282ff2e8a736d07068f98a2450d84d1bb9e0748",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/2191d01d7708c57d131ce67de81355cdaa791ff3",
                 "reference": "4282ff2e8a736d07068f98a2450d84d1bb9e0748",
                 "shasum": ""
             },
@@ -679,7 +774,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/939c8c28a5b1e4ab7317bc30c1f9aa881c4b06b5",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/937540ad69d3e578535d80ce48dbdfba2e1d7b93",
                 "reference": "939c8c28a5b1e4ab7317bc30c1f9aa881c4b06b5",
                 "shasum": ""
             },
@@ -731,7 +826,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/90a46805ab8cafc9e22327a54a9a8126ef71dc57",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/ea1b85512d2d6c95f83a443ba45769586884a17a",
                 "reference": "90a46805ab8cafc9e22327a54a9a8126ef71dc57",
                 "shasum": ""
             },
@@ -872,7 +967,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/3b1bac52f42cb0f54df1a2dbabd55a1d214e2a59",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/13b1cca9e354fce3b282a411c45cbea0a21a12f8",
                 "reference": "3b1bac52f42cb0f54df1a2dbabd55a1d214e2a59",
                 "shasum": ""
             },
@@ -1004,7 +1099,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "illuminate/config": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
