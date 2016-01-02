@@ -43,7 +43,7 @@ class TenantServiceProvider extends RoutingServiceProvider
     protected function registerSingletons()
     {
         $this->app->singleton('tenant.subdomain', function(){
-            return new \Dlimars\Tenant\TenantManager;
+            return new \Dlimars\Tenant\TenantManager(app('config'));
         });
     }
 
