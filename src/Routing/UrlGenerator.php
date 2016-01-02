@@ -76,9 +76,19 @@ class UrlGenerator extends CoreUrlGenerator
      */
     private function getSubDomainParameter()
     {
-        if(\Route::current()) {
-            return \Route::input(config('tenant.subdomain'));
+        if(\Route::current() && ($param = \Route::input(config('tenant.subdomain'))) ) {
+            return $param;
         }
-        return null;
+        return $this->extractSubdomainFromUrl();
+    }
+
+    /**
+     * Extract the subdomain from url
+     * @return string subdomain parameter value
+     */
+    private function extractSubdomainFromUrl()
+    {
+        $subdomain = str_ireplace( "." . $this->tenantManager->getDomain(), "", \Request::getHost() );
+        return $subdomain;
     }
 }
