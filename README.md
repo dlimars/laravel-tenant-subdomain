@@ -10,11 +10,11 @@ Este pacote irá auxiliar na organização de clientes em subdomínios usando La
 ## Instalação
 Adicione no seu `composer.json`
 
-```
-    "require": {
-        ...
-        "dlimars/laravel-tenant-subdomain": "dev-master"
-    },
+```js
+"require": {
+    //..
+    "dlimars/laravel-tenant-subdomain": "dev-master"
+},
 ```
 
 ou execute em seu terminal
@@ -24,30 +24,29 @@ ou execute em seu terminal
 
 adicione o provider e o facade em `config/app.php`:
 
-```
-    'providers' => [
-        // outros providers
-        Dlimars\Tenant\Providers\TenantServiceProvider::class,
-    ],
+```php
+'providers' => [
+    // outros providers
+    Dlimars\Tenant\Providers\TenantServiceProvider::class,
+],
 
-    'aliases' => [
-        // outros aliases
-        'Tenant' => Dlimars\Tenant\Facades\Tenant::class,
-    ]
+'aliases' => [
+    // outros aliases
+    'Tenant' => Dlimars\Tenant\Facades\Tenant::class,
+]
 ```
 
 adicione o middleware em `app/Http/Kernel.php`
 
-```
-    protected $routeMiddleware = [
-        // outros middlewares
-        'tenant.database' => \Dlimars\Tenant\Middlewares\TenantDatabase::class
-    ];
+```php
+protected $routeMiddleware = [
+    // outros middlewares
+    'tenant.database' => \Dlimars\Tenant\Middlewares\TenantDatabase::class
+];
 ```
 
-Após isso, abra seu console e execute: `php artisan vendor:publish`, modifique o arquivo `config/tenant.php` para sua necessidade
+Após isso, abra seu console e execute: `php artisan vendor:publish`, modifique o arquivo `config/tenant.php` para sua necessidade, abra seu arquivo `.env` e adicione:
 
-abra seu arquivo `.env` e adicione:
 ```
 APP_HOST=domain.com
 TENANT_SUBDOMAIN_ARGUMENT=_account_
@@ -57,7 +56,7 @@ TENANT_SUBDOMAIN_ARGUMENT=_account_
 
 para gerar rotas de subdominio, utilize da seguinte forma:
 
-```
+```php
 // Tenant::getFullDomain() retorna algo como '{_account_}.domain.com'
 
 Route::group(['domain' => Tenant::getFullDomain()], function () {
@@ -69,7 +68,7 @@ Route::group(['domain' => Tenant::getFullDomain()], function () {
 
 para gerar rotas para a aplicação principal (que não seja subdominio), utilize da seguinte forma
 
-```
+```php
 // Tenant::getDomain() retorna algo como 'domain.com'
 
 Route::group(['domain' => Tenant::getDomain()], function () {
@@ -85,7 +84,7 @@ Route::group(['domain' => Tenant::getDomain()], function () {
 
 os arquivos de configurações de banco serão lidos por padrão, dentro da pasta `config/tenant`, com o exemplo de conteudo:
 
-```
+```php
 return [
     'driver'    => 'mysql',
     'host'      => 'host',
@@ -98,8 +97,10 @@ return [
     'strict'    => false,
 ];
 ```
+
 o arquivo é lido e adicionado como conexão padrão `tenant`, isso é feito via Middleware, em todas as rotas que irão utilizar base de dados própria, use o middleware `tenant.database`:
-```
+
+```php
 Route::group(['domain' => Tenant::getDomain(), 'middleware' => ['tenant.database']], function () {
     Route::get('domain-teste/{id}', ['as' => 'domain-teste', function($id){
         return route('domain-teste', ['123']);
