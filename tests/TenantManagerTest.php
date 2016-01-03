@@ -29,6 +29,16 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('foo/testing_test_stub.php', $filename);
 	}
 
+	public function testGetDatabaseConfigIfFileExists()
+	{
+		$config = $this->config;
+		$config['database_prefix'] = 'configuration_';
+		$config['database_path'] = realpath(__DIR__ . '/stubs');
+		$tenant = $this->newTenantManager($config);
+		$configuration = $tenant->getDatabaseConfig('test');
+		$this->assertInternalType('array', $configuration);
+	}
+
 	private function newTenantManager($config)
 	{
 		$configMock = $this->getConfigMock($config);
