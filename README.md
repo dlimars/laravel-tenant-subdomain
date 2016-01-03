@@ -100,7 +100,7 @@ return [
 ```
 o arquivo é lido e adicionado como conexão padrão `tenant`, isso é feito via Middleware, em todas as rotas que irão utilizar base de dados própria, use o middleware `tenant.database`:
 ```
-Route::group(['domain' => Tenant::getDomain(), 'middleware' => ['tenant.database']], function () {
+Route::group(['domain' => Tenant::getFullDomain(), 'middleware' => ['tenant.database']], function () {
     Route::get('domain-teste/{id}', ['as' => 'domain-teste', function($id){
         return route('domain-teste', ['123']);
     }]);
