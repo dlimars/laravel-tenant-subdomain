@@ -13,7 +13,7 @@ Adicione no seu `composer.json`
 ```
     "require": {
         ...
-        "dlimars/laravel-tenant-subdomain": "dev-master"
+        "dlimars/laravel-tenant-subdomain": "1.0.0"
     },
 ```
 
