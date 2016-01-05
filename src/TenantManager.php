@@ -64,7 +64,8 @@ class TenantManager
     public function makeDatabaseConfigFile($subdomain, array $config)
     {
         $filename = $this->getDatabaseConfigFileName($subdomain);
-        $content = "return " . $this->getArrayAsString($config) . ";";
+        $content = "<?php\n\r\n\r" .
+                    "return " . $this->getArrayAsString($config) . ";";
         return (bool) file_put_contents($filename, $content);
     }
 

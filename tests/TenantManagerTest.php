@@ -54,7 +54,8 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		$response = $tenant->makeDatabaseConfigFile('foo', ['bar' => 'baz'] );
 		$this->assertTrue( $response );
 		$this->assertFileExists( __DIR__ . '/temp/bar_foo_baz.php' );
-		$fileCompare = "return [\n\r"
+		$fileCompare =  "<?php\n\r\n\r"
+						."return [\n\r"
 						. "\t'bar' => 'baz',\n\r"
 						. "];";
 		$fileContents = file_get_contents(__DIR__ . '/temp/bar_foo_baz.php');
