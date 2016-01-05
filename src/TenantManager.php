@@ -69,6 +69,20 @@ class TenantManager
     }
 
     /**
+     * Drop the configuration database config file
+     * @param $subdomain string subdomain name
+     * @return boolean
+     */
+    public function dropDatabaseConfigFile($subdomain)
+    {
+        $filename = $this->getDatabaseConfigFileName($subdomain);
+        if (file_exists($filename)) {
+            return (bool) unlink($filename);
+        }
+        return false;
+    }
+
+    /**
      * Get the full database config file name
      *
      * @param string subdomain

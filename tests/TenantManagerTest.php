@@ -61,6 +61,17 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($fileCompare, $fileContents);
 	}
 
+	public function testDropDatabaseConfigFile()
+	{
+		$config = $this->config;
+		$config['database_path'] = realpath(__DIR__ . '/temp');
+		$config['database_prefix'] = 'foo_';
+		$config['database_suffix'] = '_baz.php';
+		$tenant = $this->newTenantManager($config);
+		file_put_contents($config['database_path'] . "/foo_bar_baz.php", "foo_bar");
+		$this->assertTrue($tenant->dropDatabaseConfigFile('bar'));
+	}
+
 
 	private function newTenantManager($config)
 	{
