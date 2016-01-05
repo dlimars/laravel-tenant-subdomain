@@ -56,6 +56,19 @@ class TenantManager
     }
 
     /**
+     * Make the configuration database config file
+     * @param $subdomain Subdomain name
+     * @param $config array database configuration
+     * @return boolean file creation success
+     */
+    public function MakeDatabaseConfigFile($subdomain, array $config)
+    {
+        $filename = $this->getDatabaseConfigFileName($subdomain);
+        $content = "return " . $this->getArrayAsString($config) . ";";
+        return (bool) file_put_contents($filename, $content);
+    }
+
+    /**
      * Get the full database config file name
      *
      * @param string subdomain
@@ -92,5 +105,19 @@ class TenantManager
         return is_callable($this->config->get('tenant.database_suffix'))
                         ? call_user_func_array($this->config->get('tenant.database_suffix'),[$subdomain])
                         : $this->config->get('tenant.database_suffix');
+    }
+
+    /**
+     * Tranform array in string
+     * @param $data input array
+     * @return string
+     */
+    private function getArrayAsString(array $data)
+    {
+        $output = "[\n\r";
+        array_walk_recursive($data, function($value, $key) use (&$output) {
+            $output.= "\t'$key' => '$value',\n\r";
+        });
+        return $output . "]";
     }
 }

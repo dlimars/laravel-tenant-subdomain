@@ -13,6 +13,11 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		'database_suffix'	=> '_stub.php'
 	];
 
+	public function tearDown()
+	{
+		$this->resetTempFolder();
+	}
+
 	public function testGetFullDomain()
 	{
 		$tenant = $this->newTenantManager($this->config);
@@ -39,6 +44,24 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertInternalType('array', $configuration);
 	}
 
+	public function testMakeDatabaseConfigFile()
+	{
+		$config = $this->config;
+		$config['database_path'] = realpath(__DIR__ . '/temp');
+		$config['database_prefix'] = 'bar_';
+		$config['database_suffix'] = '_baz.php';
+		$tenant = $this->newTenantManager($config);
+		$response = $tenant->makeDatabaseConfigFile('foo', ['bar' => 'baz'] );
+		$this->assertTrue( $response );
+		$this->assertFileExists( __DIR__ . '/temp/bar_foo_baz.php' );
+		$fileCompare = "return [\n\r"
+						. "\t'bar' => 'baz',\n\r"
+						. "];";
+		$fileContents = file_get_contents(__DIR__ . '/temp/bar_foo_baz.php');
+		$this->assertEquals($fileCompare, $fileContents);
+	}
+
+
 	private function newTenantManager($config)
 	{
 		$configMock = $this->getConfigMock($config);
@@ -60,5 +83,15 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
              	   ->will($this->returnValueMap($configMap));
 
         return $configMock;
+	}
+
+	private function resetTempFolder()
+	{
+		$files = glob(__DIR__ . '/temp/*.php');
+		foreach ($files as $file) {
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
 	}
 }
