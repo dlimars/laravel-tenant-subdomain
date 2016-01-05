@@ -109,3 +109,32 @@ Route::group(['domain' => Tenant::getFullDomain(), 'middleware' => ['tenant.data
 ```
 
 Supondo que o usuário acesse `http://beltrano.domain.com`, a configuração a ser carregada deverá estar em `/config/tenants/beltrano.php` (isso é configurável)
+
+
+### Criar Excluir configurações de banco
+
+Para criar uma nova configuração de banco, use da seguinte forma:
+
+```php
+$config = [
+    'foo' => 'bar'
+];
+
+Tenant::makeDatabaseConfigFile('foo', $config);
+```
+
+isso irá gerar um arquivo dentro de `config/tenants` com o nome de `foo.php` (ou como/onde for definido na configuração), com o seguinte conteúdo
+
+```php
+return [
+    'foo' => 'bar'
+];
+```
+
+### Excluir configurações de banco
+
+Para excluir um arquivo de configuração, apenas execute da seguinte maneira:
+
+```php
+Tenant::dropDatabaseConfigFile('foo');
+```
