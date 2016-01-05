@@ -111,7 +111,7 @@ Route::group(['domain' => Tenant::getFullDomain(), 'middleware' => ['tenant.data
 Supondo que o usuário acesse `http://beltrano.domain.com`, a configuração a ser carregada deverá estar em `/config/tenants/beltrano.php` (isso é configurável)
 
 
-### Criar Excluir configurações de banco
+### Criar configurações de banco
 
 Para criar uma nova configuração de banco, use da seguinte forma:
 
