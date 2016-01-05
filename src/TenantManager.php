@@ -61,7 +61,7 @@ class TenantManager
      * @param $config array database configuration
      * @return boolean file creation success
      */
-    public function MakeDatabaseConfigFile($subdomain, array $config)
+    public function makeDatabaseConfigFile($subdomain, array $config)
     {
         $filename = $this->getDatabaseConfigFileName($subdomain);
         $content = "return " . $this->getArrayAsString($config) . ";";
