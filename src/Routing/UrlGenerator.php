@@ -63,8 +63,8 @@ class UrlGenerator extends CoreUrlGenerator
         if(!is_array($parameters)) {
             $parameters = [$parameters];
         }
-        if ($this->getSubDomainParameter()) {
-            return array_merge([$this->getSubDomainParameter()], $parameters);
+        if ($subdomain = $this->getSubDomainParameter()) {
+            return array_merge([$subdomain], $parameters);
         }
         return $parameters;
     }
@@ -88,7 +88,9 @@ class UrlGenerator extends CoreUrlGenerator
      */
     private function extractSubdomainFromUrl()
     {
-        $subdomain = str_ireplace( "." . $this->tenantManager->getDomain(), "", \Request::getHost() );
-        return $subdomain;
+        if (\Request::getHost() != $this->tenantManager->getDomain()) {
+            return str_ireplace( $this->tenantManager->getDomain(), "", \Request::getHost() );
+        }
+        return false;
     }
 }
