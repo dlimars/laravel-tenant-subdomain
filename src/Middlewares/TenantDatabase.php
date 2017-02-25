@@ -8,18 +8,23 @@ use Illuminate\Routing\Router;
 use Illuminate\Database\DatabaseManager;
 use Closure;
 
-class TenantDatabase implements Middleware
+class TenantDatabase
 {
 
     /**
      * @var \Dlimars\Tenant\TenantManager
      */
-    protected $tenant;
+    protected $tenantManager;
 
     /**
      * @var \Illuminate\Routing\Router
      */
     protected $router;
+
+    /**
+     * @var \Illuminate\Database\DatabaseManager
+     */
+    protected $db;
 
     public function __construct(TenantManager $tenantManager, Router $router, DatabaseManager $db)
     {
