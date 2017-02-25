@@ -10,7 +10,7 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		'database_change'	=> true,
 		'database_path'		=> __DIR__ . '/stubs',
 		'database_prefix'	=> 'testing_',
-		'database_suffix'	=> '_stub.php'
+		'database_suffix'	=> '_stub'
 	];
 
 	public function tearDown()
