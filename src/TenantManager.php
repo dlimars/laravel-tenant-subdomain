@@ -93,7 +93,7 @@ class TenantManager
     {
         $prefix = $this->getDatabaseConfigPrefix($subdomain);
         $sufix  = $this->getDatabaseConfigSufix($subdomain);
-        return $this->config->get('tenant.database_path') .'/'. $prefix . $subdomain . $sufix;
+        return $this->config->get('tenant.database_path') .'/'. $prefix . $subdomain . $sufix . '.php';
     }
 
     /**
