@@ -49,7 +49,7 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		$config = $this->config;
 		$config['database_path'] = realpath(__DIR__ . '/temp');
 		$config['database_prefix'] = 'bar_';
-		$config['database_suffix'] = '_baz.php';
+		$config['database_suffix'] = '_baz';
 		$tenant = $this->newTenantManager($config);
 		$response = $tenant->makeDatabaseConfigFile('foo', ['bar' => 'baz'] );
 		$this->assertTrue( $response );
@@ -67,7 +67,7 @@ class TenanManagerTest extends PHPUnit_Framework_TestCase
 		$config = $this->config;
 		$config['database_path'] = realpath(__DIR__ . '/temp');
 		$config['database_prefix'] = 'foo_';
-		$config['database_suffix'] = '_baz.php';
+		$config['database_suffix'] = '_baz';
 		$tenant = $this->newTenantManager($config);
 		file_put_contents($config['database_path'] . "/foo_bar_baz.php", "foo_bar");
 		$this->assertTrue($tenant->dropDatabaseConfigFile('bar'));
