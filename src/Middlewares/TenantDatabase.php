@@ -57,6 +57,6 @@ class TenantDatabase
                 return $next($request);
             }
         }
-        abort(404);
+        abort(404, "Site Not Found");
     }
 }
