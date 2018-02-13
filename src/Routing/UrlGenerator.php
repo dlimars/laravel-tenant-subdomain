@@ -10,14 +10,17 @@ use Dlimars\Tenant\TenantManager;
 
 class UrlGenerator extends CoreUrlGenerator
 {
-    private $tenantManager;
+    /**
+     * @var TenantManager
+     */
+    protected $tenantManager;
 
     /**
      * Create a new URL Generator instance.
      *
-     * @param  \Illuminate\Routing\RouteCollection  $routes
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @param  \Illuminate\Routing\RouteCollection $routes
+     * @param  \Illuminate\Http\Request $request
+     * @param TenantManager $tenantManager
      */
     public function __construct(RouteCollection $routes, Request $request, TenantManager $tenantManager)
     {
@@ -43,7 +46,7 @@ class UrlGenerator extends CoreUrlGenerator
             if(config('tenant.autobind')
                 && isset($actions['domain'])
                 && $actions['domain'] == $this->tenantManager->getFullDomain()) {
-                $parameters = $this->mergeParameters($parameters);
+                $parameters = $this->mergeSubDomainParameters($parameters);
             }
 
             return $this->toRoute($route, $parameters, $absolute);
@@ -58,13 +61,13 @@ class UrlGenerator extends CoreUrlGenerator
      * @param array|string $parameters
      * @return array array of parameters
      */
-    private function mergeParameters($parameters = [])
+    protected function mergeSubDomainParameters($parameters = [])
     {
         if(!is_array($parameters)) {
             $parameters = [$parameters];
         }
-        if ($subdomain = $this->getSubDomainParameter()) {
-            return array_merge([$subdomain], $parameters);
+        if ($subDomain = $this->getSubDomainParameter()) {
+            $parameters = array_merge([$subDomain], $parameters);
         }
         return $parameters;
     }
