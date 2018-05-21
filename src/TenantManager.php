@@ -4,6 +4,7 @@ namespace Dlimars\Tenant;
 
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 
 class TenantManager
@@ -144,15 +145,39 @@ class TenantManager
      */
     public function getCurrentTenant()
     {
-        $route = $this->router->getRoutes()->match(request());
+        if ($this->config->get('tenant.name')) {
+            return $this->config->get('tenant.name');
+        }
+
+        return $this->getTenantFromRequest( request() );
+    }
+
+    /**
+     * Get Tenant from request
+     * @param Request $request
+     * @return null|object|string
+     */
+    public function getTenantFromRequest(Request $request)
+    {
+        $route = $this->router->getRoutes()->match($request);
 
         if($route) {
             if($subDomain = $route->parameter( $this->config->get('tenant.subdomain') )){
+                $this->setCurrentTenant($subDomain);
                 return $subDomain;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Set current tenant in config
+     * @param $tenantName
+     */
+    public function setCurrentTenant($tenantName)
+    {
+        $this->config->set("tenant.name", $tenantName);
     }
 
     /**
