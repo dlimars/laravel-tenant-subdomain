@@ -9,13 +9,13 @@ class TenantManager
 
     /**
      * Configuration class
-     * @var Illuminate\Config\Repository
+     * @var \Illuminate\Config\Repository
      */
     protected $config;
 
     /**
      * Create a new TenantManager
-     * @param Illuminate\Config\Repository $config Configuration class
+     * @param \Illuminate\Config\Repository $config Configuration class
      */
     public function __construct(ConfigRepository $config)
     {
@@ -33,37 +33,37 @@ class TenantManager
     }
 
     /**
-     * Get the full domain with subdomain configuration
+     * Get the full domain with subDomain configuration
      *
      * @return string like '{account}.domain.app'
      */
     public function getFullDomain()
     {
-        return "{" . $this->config->get("tenant.subdomain") . "}."
+        return "{" . $this->config->get("tenant.subDomain") . "}."
                     . $this->config->get("tenant.host");
     }
 
     /**
      * Get the database config
      * 
-     * @param $subdomain
+     * @param $subDomain
      * @return array|false database configuration
      */
-    public function getDatabaseConfig($subdomain)
+    public function getDatabaseConfig($subDomain)
     {
-        $file = realpath($this->getDatabaseConfigFileName($subdomain));
+        $file = realpath($this->getDatabaseConfigFileName($subDomain));
         return $file ? require $file : false;
     }
 
     /**
      * Make the configuration database config file
-     * @param $subdomain Subdomain name
+     * @param $subDomain String name
      * @param $config array database configuration
      * @return boolean file creation success
      */
-    public function makeDatabaseConfigFile($subdomain, array $config)
+    public function makeDatabaseConfigFile($subDomain, array $config)
     {
-        $filename = $this->getDatabaseConfigFileName($subdomain);
+        $filename = $this->getDatabaseConfigFileName($subDomain);
         $content = "<?php\n\r\n\r" .
                     "return " . $this->getArrayAsString($config) . ";";
         return (bool) file_put_contents($filename, $content);
@@ -71,12 +71,12 @@ class TenantManager
 
     /**
      * Drop the configuration database config file
-     * @param $subdomain string subdomain name
+     * @param $subDomain string subDomain name
      * @return boolean
      */
-    public function dropDatabaseConfigFile($subdomain)
+    public function dropDatabaseConfigFile($subDomain)
     {
-        $filename = $this->getDatabaseConfigFileName($subdomain);
+        $filename = $this->getDatabaseConfigFileName($subDomain);
         if (file_exists($filename)) {
             return (bool) unlink($filename);
         }
@@ -86,45 +86,45 @@ class TenantManager
     /**
      * Get the full database config file name
      *
-     * @param string subdomain
+     * @param $subDomain string subDomain name
      * @return string filename
      */
-    public function getDatabaseConfigFileName($subdomain)
+    public function getDatabaseConfigFileName($subDomain)
     {
-        $prefix = $this->getDatabaseConfigPrefix($subdomain);
-        $sufix  = $this->getDatabaseConfigSufix($subdomain);
-        return $this->config->get('tenant.database_path') .'/'. $prefix . $subdomain . $sufix . '.php';
+        $prefix = $this->getDatabaseConfigPrefix($subDomain);
+        $sufix  = $this->getDatabaseConfigSufix($subDomain);
+        return $this->config->get('tenant.database_path') .'/'. $prefix . $subDomain . $sufix . '.php';
     }
 
     /**
      * Get the prefix of database configuration
      *
-     * @param string $subdomain
+     * @param string $subDomain
      * @return string
      */
-    public function getDatabaseConfigPrefix($subdomain)
+    public function getDatabaseConfigPrefix($subDomain)
     {
         return is_callable($this->config->get('tenant.database_prefix'))
-                        ? call_user_func_array($this->config->get('tenant.database_prefix'),[$subdomain])
+                        ? call_user_func_array($this->config->get('tenant.database_prefix'),[$subDomain])
                         : $this->config->get('tenant.database_prefix');
     }
 
     /**
      * Get the sufix of database configuration
      *
-     * @param string $subdomain
+     * @param string $subDomain
      * @return string
      */
-    public function getDatabaseConfigSufix($subdomain)
+    public function getDatabaseConfigSufix($subDomain)
     {
         return is_callable($this->config->get('tenant.database_suffix'))
-                        ? call_user_func_array($this->config->get('tenant.database_suffix'),[$subdomain])
+                        ? call_user_func_array($this->config->get('tenant.database_suffix'),[$subDomain])
                         : $this->config->get('tenant.database_suffix');
     }
 
     /**
-     * Tranform array in string
-     * @param $data input array
+     * Transform array in string
+     * @param $data array
      * @return string
      */
     private function getArrayAsString(array $data)
