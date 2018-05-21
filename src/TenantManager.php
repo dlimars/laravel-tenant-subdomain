@@ -3,6 +3,8 @@
 namespace Dlimars\Tenant;
 
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Routing\Router;
 
 class TenantManager
 {
@@ -12,14 +14,28 @@ class TenantManager
      * @var \Illuminate\Config\Repository
      */
     protected $config;
+    /**
+     * @var DatabaseManager
+     */
+    private $databaseManager;
+    /**
+     * @var Router
+     */
+    private $router;
 
     /**
      * Create a new TenantManager
      * @param \Illuminate\Config\Repository $config Configuration class
+     * @param DatabaseManager $databaseManager
+     * @param Router $router
      */
-    public function __construct(ConfigRepository $config)
+    public function __construct(ConfigRepository $config,
+                                DatabaseManager $databaseManager,
+                                Router $router)
     {
         $this->config = $config;
+        $this->databaseManager = $databaseManager;
+        $this->router = $router;
     }
 
     /**
@@ -39,7 +55,7 @@ class TenantManager
      */
     public function getFullDomain()
     {
-        return "{" . $this->config->get("tenant.subDomain") . "}."
+        return "{" . $this->config->get("tenant.subdomain") . "}."
                     . $this->config->get("tenant.host");
     }
 
@@ -120,6 +136,41 @@ class TenantManager
         return is_callable($this->config->get('tenant.database_suffix'))
                         ? call_user_func_array($this->config->get('tenant.database_suffix'),[$subDomain])
                         : $this->config->get('tenant.database_suffix');
+    }
+
+    /**
+     * Get Current Tenant SubDomain
+     * @return null|string
+     */
+    public function getCurrentTenant()
+    {
+        $route = $this->router->getRoutes()->match(request());
+
+        if($route) {
+            if($subDomain = $route->parameter( $this->config->get('tenant.subdomain') )){
+                return $subDomain;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Reconnect Database Using Tenant Configs
+     * @param $tenantName
+     * @return bool
+     */
+    public function reconnectDatabaseUsing($tenantName)
+    {
+        if ($config = $this->getDatabaseConfig($tenantName)) {
+            $this->config->set("tenant.name", $tenantName);
+            $this->config->set("database.connections.tenant", $config);
+
+            $this->databaseManager->setDefaultConnection('tenant');
+            $this->databaseManager->reconnect('tenant');
+            return true;
+        }
+        return false;
     }
 
     /**

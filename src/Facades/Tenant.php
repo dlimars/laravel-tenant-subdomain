@@ -10,6 +10,6 @@ class Tenant extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'tenant.subdomain';
+        return 'tenant.manager';
     }
 }

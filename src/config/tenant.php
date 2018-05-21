@@ -3,6 +3,12 @@
 return [
 
 	/**
+	 * Current Tenant Name
+	 * This config is setup in execution time
+	 */
+	'name' => '',
+
+	/**
 	 * Subdomain argument
 	 * 'subdomain' => 'argument'
 	 * produces {argument}.host.com

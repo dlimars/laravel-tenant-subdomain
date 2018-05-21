@@ -2,35 +2,21 @@
 
 namespace Dlimars\Tenant\Middlewares;
 
-use Illuminate\Contracts\Routing\Middleware;
 use Dlimars\Tenant\TenantManager;
-use Illuminate\Routing\Router;
-use Illuminate\Database\DatabaseManager;
 use Closure;
 
 class TenantDatabase
 {
 
     /**
-     * @var \Dlimars\Tenant\TenantManager
+     * @var TenantManager
      */
     protected $tenantManager;
 
-    /**
-     * @var \Illuminate\Routing\Router
-     */
-    protected $router;
 
-    /**
-     * @var \Illuminate\Database\DatabaseManager
-     */
-    protected $db;
-
-    public function __construct(TenantManager $tenantManager, Router $router, DatabaseManager $db)
+    public function __construct(TenantManager $tenantManager)
     {
         $this->tenantManager = $tenantManager;
-        $this->router = $router;
-        $this->db = $db;
     }
     /**
      * Handle an incoming request.
@@ -41,22 +27,12 @@ class TenantDatabase
      */
     public function handle($request, Closure $next)
     {
-        $route = $this->router->getRoutes()->match($request);
-        
-        if($route) {
-            $subdomain = $route->parameter( config('tenant.subdomain') );
-
-            $config = $this->tenantManager->getDatabaseConfig($subdomain);
-
-            if ($config) {
-                config()->set("database.connections.tenant", $config);
-
-                $this->db->setDefaultConnection('tenant');
-                $this->db->reconnect('tenant');
-
+        if($tenantName = $this->tenantManager->getCurrentTenant()) {
+            if ($this->tenantManager->reconnectDatabaseUsing($tenantName)) {
                 return $next($request);
             }
         }
+
         abort(404, "Site Not Found");
     }
 }

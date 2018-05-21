@@ -2,7 +2,7 @@
 
 use Dlimars\Tenant\TenantManager;
 
-class TenanManagerTest extends PHPUnit_Framework_TestCase
+class TenantManagerTest extends PHPUnit_Framework_TestCase
 {
 	private $config = [
 		'subdomain' 		=> '_account_',
