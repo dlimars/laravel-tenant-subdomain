@@ -92,8 +92,8 @@ class TenantManager
     public function getDatabaseConfigFileName($subDomain)
     {
         $prefix = $this->getDatabaseConfigPrefix($subDomain);
-        $sufix  = $this->getDatabaseConfigSufix($subDomain);
-        return $this->config->get('tenant.database_path') .'/'. $prefix . $subDomain . $sufix . '.php';
+        $suffix = $this->getDatabaseConfigSuffix($subDomain);
+        return $this->config->get('tenant.database_path') .'/'. $prefix . $subDomain . $suffix . '.php';
     }
 
     /**
@@ -115,7 +115,7 @@ class TenantManager
      * @param string $subDomain
      * @return string
      */
-    public function getDatabaseConfigSufix($subDomain)
+    public function getDatabaseConfigSuffix($subDomain)
     {
         return is_callable($this->config->get('tenant.database_suffix'))
                         ? call_user_func_array($this->config->get('tenant.database_suffix'),[$subDomain])
