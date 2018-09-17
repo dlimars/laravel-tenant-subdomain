@@ -66,6 +66,12 @@ class UrlGenerator extends CoreUrlGenerator
         if(!is_array($parameters)) {
             $parameters = [$parameters];
         }
+
+        if(isset($parameters[config('tenant.subdomain')])){
+            $subDomain = $parameters[config('tenant.subdomain')];
+            return array_replace($parameters, [config('tenant.subdomain') => $subDomain]);
+        }
+
         if ($subDomain = $this->getSubDomainParameter()) {
             $parameters = array_replace($parameters, [config('tenant.subdomain') => $subDomain]);
         }
