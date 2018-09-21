@@ -27,7 +27,7 @@ class TenantDatabase
      */
     public function handle($request, Closure $next)
     {
-        if($tenantName = $this->tenantManager->getTenantFromRequest($request)) {
+        if($tenantName = $this->tenantManager->getCurrentTenant()) {
             if ($this->tenantManager->reconnectDatabaseUsing($tenantName)) {
                 return $next($request);
             }
